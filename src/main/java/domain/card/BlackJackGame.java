@@ -34,8 +34,7 @@ public class BlackJackGame {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요 (쉼표로 구분합니다)");
         List<Player> players = registPlayers();
         Dealer dealer = new Dealer();
-        CardFactory cardFactory = new CardFactory();
-        List<Card> cardTrump = cardFactory.create();
+        List<Card> cardTrump = CardFactory.create();
         playBlackJackGame(players, dealer, cardTrump);
     }
 
@@ -157,6 +156,7 @@ public class BlackJackGame {
         System.out.println("딜러가 21을 초과 했으므로 모든 플레이어는 배팅 금액을 받습니다.");
         System.out.println("###최종수익");
         int loseMoney = 0;
+
         for(Player player : players) {
             System.out.println(player.getName() + " : " + (int)player.getBettingMoney());
             loseMoney += player.getBettingMoney();
@@ -168,7 +168,7 @@ public class BlackJackGame {
         if(dealer.allScore() <= DEALER_GET_MORE_CARD_SCORE) {
             System.out.println("딜러는 16이하라 한장의 카드를 더 받습니다.");
             System.out.printf("\n\n");
-            dealer.addCard(useCard,cardTrump);
+            dealer.addDealerCard(useCard,cardTrump);
         }
     }
 
@@ -197,7 +197,7 @@ public class BlackJackGame {
             System.out.println("y 또는 n을 입력해주시기 바랍니다.");
         }
         if(goOrStop.equals(GET_MORE_CARD)) {
-            player.addCard(useCard, cardTrump);
+            player.addPlayerCard(useCard, cardTrump);
             System.out.println(player.getName()+"카드:" +player.getCard().toString());
         }
     }
@@ -329,9 +329,9 @@ public class BlackJackGame {
 
     private void giveCardToAllPlayer(HashMap<Card, Integer> useCard, List<Player> players, Dealer dealer, List<Card> cardTrump) {
         for(Player player : players) {
-            player.addCard(useCard, cardTrump);
+            player.addPlayerCard(useCard, cardTrump);
         }
-        dealer.addCard(useCard,cardTrump);
+        dealer.addDealerCard(useCard,cardTrump);
     }
 
     private ArrayList<Player> registPlayers() {
